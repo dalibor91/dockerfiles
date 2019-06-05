@@ -1,0 +1,17 @@
+FROM debian:9 
+LABEL maintainer="dalibor.menkovic@gmail.com"
+
+RUN apt-get update 
+RUN apt-get install -y git procps net-tools gcc binutils make csh g++ sed gawk autoconf automake autotools-dev
+
+RUN git clone https://github.com/mkj/dropbear /opt/dropbear
+WORKDIR /opt/dropbear
+
+
+RUN autoconf; autoheader
+RUN ./configure --disable-zlib && make PROGRAMS="dropbear dropbearkey"
+
+RUN ./dropbearkey -t rsa -f /tmp/dropbear.key
+EXPOSE 22
+
+CMD ["./dropbear", "-F", "-E", "-T", "100", "-P", "/tmp/dropbear.pid", "-r", "/tmp/dropbear.key"]
