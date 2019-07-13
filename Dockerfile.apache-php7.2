@@ -1,0 +1,42 @@
+FROM debian:9 
+
+MAINTAINER Dalibor Menkovic <dalibor.menkovic@gmail.com>
+
+RUN apt-get update && \
+    apt-get install -y \
+    locales \
+    apt-transport-https \
+    lsb-release \
+    ca-certificates \
+    gpg \
+    vim \
+    curl \
+    wget \
+    apache2 \
+    zip
+
+ADD docker/apache-php7.2/sites-available  /etc/apache2/sites-available
+ADD docker/apache-php7.2/sites-enabled    /etc/apache2/sites-enabled
+ADD docker/apache-php7.2/apache2.conf     /etc/apache2/apache2.conf
+ADD docker/apache-php7.2/envvars          /etc/apache2/envvars
+
+RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" >> /etc/apt/sources.list.d/php.list
+
+RUN apt-get update && \
+    apt-get install -y \
+    php7.2 php-common php7.2-cli php7.2-mysql \
+    php-pear php7.2-dev php7.2-gd php7.2-memcached \
+    php-gettext php7.2-xml php7.2-zip \
+    libapache2-mod-php7.2 php7.2-curl \
+    php-intl php7.2-imagick php7.2-mbstring php7.2-mongodb php7.2-json php-log
+
+RUN php -r " file_put_contents('cs.php', file_get_contents('https://getcomposer.org/installer')); if (hash_file('SHA384', 'cs.php') !== trim(file_get_contents('https://composer.github.io/installer.sig'))) { echo 'Corupted'.PHP_EOL; unlink('cs.php'); } " && \
+    php cs.php --install-dir=/usr/local/bin --filename=composer  && \
+    rm cs.php
+
+RUN echo '<?php phpinfo() ?>' > /var/www/html/info.php
+
+EXPOSE 80
+
+CMD ["/usr/sbin/apache2ctl","-DFOREGROUND"]

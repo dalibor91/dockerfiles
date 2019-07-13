@@ -1,0 +1,21 @@
+FROM debian:9 
+
+MAINTAINER Dalibor Menkovic <dalibor.menkovic@gmail.com>
+
+RUN apt-get update && \
+    apt-get install -y \
+    nginx \
+    curl \
+    wget
+
+ADD docker/nginx/conf.d             /etc/nginx/conf.d
+ADD docker/nginx/sites-available    /etc/nginx/sites-available
+ADD docker/nginx/sites-enabled      /etc/nginx/sites-enabled
+ADD docker/nginx/fastcgi.conf       /etc/nginx/fastcgi.conf
+ADD docker/nginx/fastcgi_params     /etc/nginx/fastcgi_params
+ADD docker/nginx/nginx.conf         /etc/nginx/nginx.conf
+ADD docker/nginx/proxy_params       /etc/nginx/proxy_params
+
+EXPOSE 80
+
+CMD [ "nginx" ]
