@@ -6,6 +6,7 @@ then
 	ln -s service/${2}/compose.yml docker-compose.yml
 	shift
 	shift
+	echo "docker-compose run --service-ports $@ "
 	docker-compose run --service-ports $@ 
 else 
 	echo "Usage 'compose use [service]'"
