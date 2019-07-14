@@ -50,3 +50,20 @@ Running
 ```sh
 docker run -it --rm --name nginx --hostname nginx -p "80:80" nginx
 ```
+
+### Example 
+
+Example of creating multiple apache instances with php 
+and nginx that is entry point and proxies requests to apache webservses 
+
+Make sure you have in `/etc/hosts`
+```bash
+127.0.0.1       app1.test app2.test app3.test app4.test app5.test
+```
+
+Then run 
+```bash 
+docker-compose run --service-ports nginx
+```
+
+Note: port 80 has to be free 

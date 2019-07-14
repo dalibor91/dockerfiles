@@ -1,0 +1,59 @@
+server {
+    listen 80;
+    server_name www.app1.test app1.test;
+    location / {
+      access_log off;
+      proxy_pass http://app1;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+
+server {
+    listen 80;
+    server_name www.app2.test app2.test;
+    location / {
+      access_log off;
+      proxy_pass http://app2;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+
+server {
+    listen 80;
+    server_name www.app3.test app3.test;
+    location / {
+      access_log off;
+      proxy_pass http://app3;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+
+server {
+    listen 80;
+    server_name www.app4.test app4.test;
+    location / {
+      access_log off;
+      proxy_pass http://app4;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+
+server {
+    listen 80;
+    server_name www.app5.test app5.test;
+    location / {
+      access_log off;
+      proxy_pass http://app5;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}

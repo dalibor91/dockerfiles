@@ -1,0 +1,88 @@
+version: '3'
+services:
+  app1:
+    hostname: app1
+    image: app1
+    networks:
+      srvnetwork:
+        ipv4_address: 172.16.238.11
+    build:
+      context: "."
+      dockerfile: "Dockerfile.apache-php7.2"
+    volumes:
+      - "./service/example/app1/www:/var/www"
+      - "./service/example/app1/logs:/var/log/apache2"
+  app2:
+    hostname: app2
+    image: app2
+    networks:
+      srvnetwork:
+        ipv4_address: 172.16.238.12
+    build:
+      context: "."
+      dockerfile: "Dockerfile.apache-php7.2"
+    volumes:
+      - "./service/example/app2/www:/var/www"
+      - "./service/example/app2/logs:/var/log/apache2"
+  app3:
+    hostname: app3
+    image: app3
+    networks:
+      srvnetwork:
+        ipv4_address: 172.16.238.13
+    build:
+      context: "."
+      dockerfile: "Dockerfile.apache-php7.2"
+    volumes:
+      - "./service/example/app3/www:/var/www"
+      - "./service/example/app3/logs:/var/log/apache2"
+  app4:
+    hostname: app4
+    image: app4
+    networks:
+      srvnetwork:
+        ipv4_address: 172.16.238.14
+    build:
+      context: "."
+      dockerfile: "Dockerfile.apache-php7.2"
+    volumes:
+      - "./service/example/app4/www:/var/www"
+      - "./service/example/app4/logs:/var/log/apache2"
+  app5:
+    hostname: app5
+    image: app5
+    networks:
+      srvnetwork:
+        ipv4_address: 172.16.238.15
+    build:
+      context: "."
+      dockerfile: "Dockerfile.apache-php7.2"
+    volumes:
+      - "./service/example/app5/www:/var/www"
+      - "./service/example/app5/logs:/var/log/apache2"
+  nginx:
+    ports: 
+      - "80:80"
+    volumes:
+      - "./service/example/nginx/sites-enabled:/etc/nginx/sites-enabled"
+      - "./service/example/nginx/logs:/var/log/nginx"
+    build:
+      context: "."
+      dockerfile: "Dockerfile.nginx"
+    image: "proxy"
+    networks: 
+      srvnetwork:
+        ipv4_address: 172.16.238.10
+    hostname: nginx
+    depends_on:
+      - app1
+      - app2
+      - app3 
+      - app4 
+      - app5
+networks:
+  srvnetwork:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"
