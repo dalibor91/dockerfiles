@@ -5,7 +5,7 @@
 Building 
 
 ```sh
-docker build -t dropbear -f Dockerfile.dropbear .
+docker build -t dropbear -f dockerfiles/Dockerfile.dropbear .
 ```
 
 Running
@@ -18,7 +18,7 @@ docker run -it --rm --name dropbear --hostname dropbear -p "2222:22" dropbear
 Building 
 
 ```sh
-docker build -t php:7.2-fpm -f Dockerfile.php7.2-fpm .
+docker build -t php:7.2-fpm -f dockerfiles/Dockerfile.php7.2-fpm .
 ```
 
 Running
@@ -30,7 +30,7 @@ docker run -it --rm --name php7.2-fpm --hostname php7.2-fpm -p "9000:9000" php:7
 Building 
 
 ```sh
-docker build -t apache:php7.2 -f Dockerfile.apache-php7.2 .
+docker build -t apache:php7.2 -f dockerfiles/Dockerfile.apache-php7.2 .
 ```
 
 Running
@@ -43,7 +43,7 @@ docker run -it --rm --name apache-php7.2 --hostname apache-php7.2 -p "80:80" apa
 Building 
 
 ```sh
-docker build -t nginx -f Dockerfile.nginx .
+docker build -t nginx -f dockerfiles/Dockerfile.nginx .
 ```
 
 Running
@@ -74,3 +74,28 @@ docker-compose run --service-ports nginx
 ```
 
 Note: port 80 has to be free 
+
+
+### Laravel/Lumen installation 
+
+Laravel + Mysql service 
+
+To setup fresh installation of laravel run 
+```bash
+./compose use laravel init
+```
+
+To setup fresh installation of lumen run 
+```bash
+./compose use lumen init
+```
+
+Everytime after that you can start nececary services with 
+```bash 
+./compose use laravel app #or lumen
+```
+
+Default url is `laravel.test` or `lumen.test` so make sure that you add that to `/etc/hosts`
+for more info see `service/laravel/compose.yml` or `service/lumen/compose.yml`
+
+Laravel app is stored in `service/laravel/app` (Lumen `service/lumen/app`)

@@ -8,7 +8,7 @@ services:
         ipv4_address: 172.16.238.11
     build:
       context: "."
-      dockerfile: "Dockerfile.apache-php7.2"
+      dockerfile: "dockerfiles/Dockerfile.apache-php7.2"
     volumes:
       - "./service/example/app1/www:/var/www"
       - "./service/example/app1/logs:/var/log/apache2"
@@ -20,7 +20,7 @@ services:
         ipv4_address: 172.16.238.12
     build:
       context: "."
-      dockerfile: "Dockerfile.apache-php7.2"
+      dockerfile: "dockerfiles/Dockerfile.apache-php7.2"
     volumes:
       - "./service/example/app2/www:/var/www"
       - "./service/example/app2/logs:/var/log/apache2"
@@ -32,7 +32,7 @@ services:
         ipv4_address: 172.16.238.13
     build:
       context: "."
-      dockerfile: "Dockerfile.apache-php7.2"
+      dockerfile: "dockerfiles/Dockerfile.apache-php7.2"
     volumes:
       - "./service/example/app3/www:/var/www"
       - "./service/example/app3/logs:/var/log/apache2"
@@ -44,7 +44,7 @@ services:
         ipv4_address: 172.16.238.14
     build:
       context: "."
-      dockerfile: "Dockerfile.apache-php7.2"
+      dockerfile: "dockerfiles/Dockerfile.apache-php7.2"
     volumes:
       - "./service/example/app4/www:/var/www"
       - "./service/example/app4/logs:/var/log/apache2"
@@ -56,7 +56,7 @@ services:
         ipv4_address: 172.16.238.15
     build:
       context: "."
-      dockerfile: "Dockerfile.apache-php7.2"
+      dockerfile: "dockerfiles/Dockerfile.apache-php7.2"
     volumes:
       - "./service/example/app5/www:/var/www"
       - "./service/example/app5/logs:/var/log/apache2"
@@ -68,7 +68,7 @@ services:
       - "./service/example/nginx/logs:/var/log/nginx"
     build:
       context: "."
-      dockerfile: "Dockerfile.nginx"
+      dockerfile: "dockerfiles/Dockerfile.nginx"
     image: "proxy"
     networks: 
       srvnetwork:

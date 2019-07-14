@@ -1,0 +1,47 @@
+version: '3'
+services:
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: lumen
+    networks: 
+      srvnetwork:
+        ipv4_address: 172.16.238.11
+    hostname: mysql
+  app:
+    ports:
+      - "80:80"
+    volumes:
+      - "./service/lumen/apache2/sites-enabled:/etc/apache2/sites-enabled"
+      - "./service/lumen/apache2/logs:/var/log/apache2"
+      - "./service/lumen/app:/var/www/app"
+    build:
+      context: "."
+      dockerfile: "dockerfiles/Dockerfile.apache-php7.2"
+    image: "apache2"
+    networks: 
+      srvnetwork:
+        ipv4_address: 172.16.238.10
+    hostname: app
+    working_dir: /var/www/app
+    depends_on:
+      - mysql
+  init: 
+    build:
+      context: "."
+      dockerfile: "dockerfiles/Dockerfile.apache-php7.2"
+    volumes:
+      - "./service/lumen/app:/var/www/app"
+      - "./service/lumen/installer:/installer"
+    depends_on:
+      - app 
+    working_dir: /installer
+    command: /bin/bash install.sh
+networks:
+  srvnetwork:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.10/32"
