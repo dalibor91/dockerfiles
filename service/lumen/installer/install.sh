@@ -25,6 +25,7 @@ cd /tmp
 ~/.composer/vendor/laravel/lumen-installer/lumen new lumen
 cd lumen 
 mv * /var/www/app
+mv ./.[a-z]* /var/www/app
 
 cd /var/www/app
 cat $env_file > ./.env

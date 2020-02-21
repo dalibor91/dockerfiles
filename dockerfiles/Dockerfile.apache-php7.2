@@ -36,6 +36,7 @@ RUN php -r " file_put_contents('cs.php', file_get_contents('https://getcomposer.
     rm cs.php
 
 RUN echo '<?php phpinfo() ?>' > /var/www/html/info.php
+RUN a2enmod rewrite
 
 EXPOSE 80
 

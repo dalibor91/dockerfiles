@@ -2,13 +2,13 @@ version: '3'
 services:
   mysql:
     image: mysql
-    command: --default-authentication-plugin=mysql_native_password
+    command: --default-authentication-plugin=mysql_native_password --sql-mode=""
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: lumen
     networks: 
       srvnetwork:
-        ipv4_address: 172.16.238.11
+        ipv4_address: 152.24.238.11
     hostname: mysql
   app:
     ports:
@@ -23,7 +23,7 @@ services:
     image: "apache2"
     networks: 
       srvnetwork:
-        ipv4_address: 172.16.238.10
+        ipv4_address: 152.24.238.10
     hostname: app
     working_dir: /var/www/app
     depends_on:
@@ -44,4 +44,4 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: "172.16.238.10/32"
+        - subnet: "152.24.238.10/24"
